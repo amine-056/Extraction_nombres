@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Extraction de nombres</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Extraction de nombres</h1>
+
+        <p>Veuillez saisir un texte :</p>
+
+        <form method="POST">
+
+           <textarea name="texte" rows="8" cols="60">{{ texte }}</textarea>
+
+            <br><br>
+
+            <button type="submit">Analyser</button>
+
+        </form>
+
+        <hr>
+
+        <h2>Résultats :</h2>
+
+        <h3>Dates :</h3>
+        {% for date in dates %}
+        <p>{{ date }}</p>
+        {% endfor %}
+
+        <h3>Montants :</h3>
+        {% for montant in montants %}
+        <p>{{ montant }}</p>
+        {% endfor %}
+
+        <h3>Années :</h3>
+        {% for annee in annees %}
+        <p>{{ annee }}</p>
+        {% endfor %}
+
+        <h3>Téléphones :</h3>
+        {% for telephone in telephones %}
+        <p>{{ telephone }}</p>
+        {% endfor %}
+
+        <h3>Autres nombres :</h3>
+        {% for nombre in nombres %}
+        <p>{{ nombre }}</p>
+        {% endfor %}
+
+    </div>
+
+</body>
+
+</html>
