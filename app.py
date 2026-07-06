@@ -21,16 +21,21 @@ def home():
         dates = re.findall(r"\b\d{2}/\d{2}/\d{4}\b", texte)
 
         montants = re.findall(
-            r"\b\d+\s?(?:DT|TND|EUR|USD|€|\$)\b",
+            r"\b\d+\s?(?:DT|TND|EUR|USD|€|\$|euros?)\b",
             texte,
             re.IGNORECASE
         )
 
         annees = re.findall(r"\b(?:19|20)\d{2}\b", texte)
 
-        telephones = re.findall(r"\b\d{8}\b", texte)
+        telephones = re.findall(r"\b\d{8,12}\b", texte)
 
-        nombres = re.findall(r"\b\d+\b", texte)
+        texte_temp = texte
+
+        for element in dates + montants + annees + telephones:
+            texte_temp = texte_temp.replace(element, " ")
+
+        nombres = re.findall(r"\b\d+\b", texte_temp)
 
     return render_template(
         "index.html",
