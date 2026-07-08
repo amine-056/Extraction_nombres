@@ -6,7 +6,6 @@ from datetime import datetime
 app = Flask(__name__)
 
 
-# Création de la base de données
 def init_db():
     conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
@@ -45,23 +44,18 @@ def home():
 
         texte = request.form["texte"]
 
-        # Dates
         dates = re.findall(r"\b\d{2}/\d{2}/\d{4}\b", texte)
 
-        # Montants
         montants = re.findall(
-            r"\b\d+\s?(?:DT|TND|EUR|USD|€|\$|euros?)\b",
+            r"\b\d+(?:[,.]\d+)?\s?(?:DT|TND|EUR|USD|€|\$|euros?)\b",
             texte,
             re.IGNORECASE
         )
 
-        # Années
         annees = re.findall(r"\b(?:19|20)\d{2}\b", texte)
 
-        # Téléphones (8 à 12 chiffres)
         telephones = re.findall(r"\b\d{8,12}\b", texte)
 
-        # Autres nombres
         texte_temp = texte
 
         for element in dates + montants + annees + telephones:
@@ -69,7 +63,6 @@ def home():
 
         nombres = re.findall(r"\b\d+\b", texte_temp)
 
-        # Sauvegarde dans SQLite
         conn = sqlite3.connect("database.db")
         cursor = conn.cursor()
 
