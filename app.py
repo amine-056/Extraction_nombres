@@ -16,6 +16,7 @@ def init_db():
             texte_original TEXT,
             dates TEXT,
             montants TEXT,
+            pourcentages TEXT,
             annees TEXT,
             telephones TEXT,
             autres_nombres TEXT,
@@ -32,24 +33,28 @@ init_db()
 
 @app.route("/", methods=["GET", "POST"])
 def home():
-
     texte = ""
     dates = []
     montants = []
+    pourcentages = []
     annees = []
     telephones = []
     nombres = []
 
     if request.method == "POST":
-
         texte = request.form["texte"]
 
         dates = re.findall(r"\b\d{2}/\d{2}/\d{4}\b", texte)
 
         montants = re.findall(
-            r"\b\d+(?:[,.]\d+)?\s?(?:DT|TND|EUR|USD|€|\$|euros?)\b",
+            r"\b\d+(?:[.,]\d+)?\s?(?:DT|TND|EUR|USD|€|\$|euros?)\b",
             texte,
             re.IGNORECASE
+        )
+
+        pourcentages = re.findall(
+            r"\b\d+(?:[.,]\d+)?%",
+            texte
         )
 
         annees = re.findall(r"\b(?:19|20)\d{2}\b", texte)
@@ -58,7 +63,7 @@ def home():
 
         texte_temp = texte
 
-        for element in dates + montants + annees + telephones:
+        for element in dates + montants + pourcentages + annees + telephones:
             texte_temp = texte_temp.replace(element, " ")
 
         nombres = re.findall(r"\b\d+\b", texte_temp)
@@ -71,16 +76,18 @@ def home():
                 texte_original,
                 dates,
                 montants,
+                pourcentages,
                 annees,
                 telephones,
                 autres_nombres,
                 date_creation
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             texte,
             ", ".join(dates),
             ", ".join(montants),
+            ", ".join(pourcentages),
             ", ".join(annees),
             ", ".join(telephones),
             ", ".join(nombres),
@@ -95,6 +102,7 @@ def home():
         texte=texte,
         dates=dates,
         montants=montants,
+        pourcentages=pourcentages,
         annees=annees,
         telephones=telephones,
         nombres=nombres
@@ -103,7 +111,6 @@ def home():
 
 @app.route("/historique")
 def historique():
-
     conn = sqlite3.connect("database.db")
     cursor = conn.cursor()
 
@@ -112,6 +119,7 @@ def historique():
                texte_original,
                dates,
                montants,
+               pourcentages,
                annees,
                telephones,
                autres_nombres,

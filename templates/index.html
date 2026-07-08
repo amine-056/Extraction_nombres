@@ -9,60 +9,61 @@
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <h1>Extraction de nombres</h1>
+    <h1>Extraction de nombres</h1>
+
+    <form method="POST">
 
         <p>Veuillez saisir un texte :</p>
 
-        <form method="POST">
+        <textarea name="texte" rows="8" cols="60">{{ texte }}</textarea>
 
-           <textarea name="texte" rows="8" cols="60">{{ texte }}</textarea>
+        <br><br>
 
-            <br><br>
+        <button type="submit">Analyser</button>
 
-            <div style="margin-top:20px;">
-
-            <button type="submit">Analyser</button>
-
-            <a href="/historique">
+        <a href="/historique">
             <button type="button">Historique</button>
-            </a>
+        </a>
 
-    </div>
+    </form>
 
-        </form>
+    <hr>
 
-        <hr>
+    <h2>Résultats :</h2>
 
-        <h2>Résultats :</h2>
-
-        <h3>Dates :</h3>
-        {% for date in dates %}
+    <h3>Dates :</h3>
+    {% for date in dates %}
         <p>{{ date }}</p>
-        {% endfor %}
+    {% endfor %}
 
-        <h3>Montants :</h3>
-        {% for montant in montants %}
+    <h3>Montants :</h3>
+    {% for montant in montants %}
         <p>{{ montant }}</p>
-        {% endfor %}
+    {% endfor %}
 
-        <h3>Années :</h3>
-        {% for annee in annees %}
+    <h3>Pourcentages :</h3>
+    {% for p in pourcentages %}
+        <p>{{ p }}</p>
+    {% endfor %}
+
+    <h3>Années :</h3>
+    {% for annee in annees %}
         <p>{{ annee }}</p>
-        {% endfor %}
+    {% endfor %}
 
-        <h3>Téléphones :</h3>
-        {% for telephone in telephones %}
+    <h3>Téléphones :</h3>
+    {% for telephone in telephones %}
         <p>{{ telephone }}</p>
-        {% endfor %}
+    {% endfor %}
 
-        <h3>Autres nombres :</h3>
-        {% for nombre in nombres %}
+    <h3>Autres nombres :</h3>
+    {% for nombre in nombres %}
         <p>{{ nombre }}</p>
-        {% endfor %}
+    {% endfor %}
 
-    </div>
+</div>
 
 </body>
 
