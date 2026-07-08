@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import re
 import sqlite3
 from datetime import datetime
@@ -133,6 +133,19 @@ def historique():
     conn.close()
 
     return render_template("historique.html", analyses=analyses)
+
+
+@app.route("/supprimer/<int:id>")
+def supprimer(id):
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM analyses WHERE id = ?", (id,))
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/historique")
 
 
 if __name__ == "__main__":

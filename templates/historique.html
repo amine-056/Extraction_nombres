@@ -39,6 +39,19 @@
             border-radius: 5px;
             text-decoration: none;
         }
+
+        .btn-supprimer {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-supprimer:hover {
+            background: #c0392b;
+        }
     </style>
 
 </head>
@@ -60,6 +73,7 @@
             <th>Années</th>
             <th>Téléphones</th>
             <th>Autres nombres</th>
+            <th>Action</th>
         </tr>
 
         {% for analyse in analyses %}
@@ -73,6 +87,11 @@
             <td>{{ analyse[5] }}</td>
             <td>{{ analyse[6] }}</td>
             <td>{{ analyse[7] }}</td>
+            <td>
+                <a href="/supprimer/{{ analyse[0] }}">
+                    <button type="button" class="btn-supprimer">Supprimer</button>
+                </a>
+            </td>
         </tr>
         {% endfor %}
     </table>
